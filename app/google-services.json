@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "56174746923",
+    "firebase_url": "https://electronicstore-e3b89-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "electronicstore-e3b89",
+    "storage_bucket": "electronicstore-e3b89.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56174746923:android:3088c20f40953de410f96e",
+        "android_client_info": {
+          "package_name": "com.example.electronicsstoreapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56174746923-tmsb2p09qntr45un08ehr8tkcjo4jgi1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm98bfR2CnLlVOpU_6KabHo8yHsuxZzMI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56174746923-tmsb2p09qntr45un08ehr8tkcjo4jgi1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:56174746923:android:4bdb825d6fb5a16410f96e",
+        "android_client_info": {
+          "package_name": "com.example.electronicstore"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "56174746923-tmsb2p09qntr45un08ehr8tkcjo4jgi1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAm98bfR2CnLlVOpU_6KabHo8yHsuxZzMI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "56174746923-tmsb2p09qntr45un08ehr8tkcjo4jgi1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
