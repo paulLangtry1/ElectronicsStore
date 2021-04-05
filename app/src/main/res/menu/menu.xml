@@ -6,7 +6,7 @@
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/item2"
-        android:title="Add A Note"
+        android:title="Checkout"
         app:showAsAction="never"/>
     <item android:id="@+id/item3"
         android:title="View All Notes"

@@ -3,10 +3,12 @@ package com.example.electronicsstoreapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -75,6 +77,21 @@ public class adminhome extends AppCompatActivity {
             }
         });
 
+        btnaddstock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(adminhome.this,addItem.class);
+                startActivity(intent);
+            }
+        });
+        btnviewstock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(adminhome.this,ViewItems.class);
+                startActivity(intent);
+            }
+        });
+
 
 
 
@@ -93,7 +110,7 @@ public class adminhome extends AppCompatActivity {
             case R.id.item1:
                 return true;
             case R.id.item2:
-                addNote();
+                checkout();
                 return true;
             case R.id.item3:
                 ViewAll();
@@ -113,10 +130,12 @@ public class adminhome extends AppCompatActivity {
 
     }
 
-    public void addNote()
+    public void checkout()
     {
 
 
+        Intent intent = new Intent(adminhome.this,checkout.class);
+        startActivity(intent);
 
 
     }

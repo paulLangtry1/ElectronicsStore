@@ -60,6 +60,7 @@ public class addItem extends AppCompatActivity {
     private String globaltitle;
     private boolean starttimeistrue=true;
     private String picPath;
+    private String globalid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,11 +116,15 @@ public class addItem extends AppCompatActivity {
                                 String price = etprice.getText().toString();
                                 String itemurl = "";
                                 String itemid = dbRef.push().getKey();
+                                String userid = "";
                                 globaltitle = title;
+                                globalid=itemid;
 
-                                Item item = new Item(category, manu, title, quantity, price, itemurl, itemid);
+                                Item item = new Item(category, manu, title, quantity, price, itemurl, itemid,userid);
 
                                 dbRef.child(itemid).setValue(item);
+
+                                Toast.makeText(getApplicationContext(),"Item is created", Toast.LENGTH_LONG).show();
 
                                 //String keyId = dbRef.push().getKey();
                                 //dbRef.child(keyId).setValue(contract);
@@ -191,10 +196,10 @@ public class addItem extends AppCompatActivity {
         pd.show();
 
         final String key = user.getUid();
-        StorageReference ref = storageReference.child("images/profilepic" + globaltitle);
+        StorageReference ref = storageReference.child("images/item" + globaltitle);
         picPath = ref.getPath();
-        DatabaseReference c1v2= FirebaseDatabase.getInstance().getReference().child("user").child(uid).child("ppurl");
-        c1v2.setValue("gs://fypapp-8ebb3.appspot.com" + picPath);
+        DatabaseReference c1v2= FirebaseDatabase.getInstance().getReference().child("Item").child(globalid).child("itemurl");
+        c1v2.setValue("gs://electronicstore-e3b89.appspot.com" + picPath);
 
         ref.putFile(filepath)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {

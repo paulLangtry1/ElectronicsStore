@@ -9,7 +9,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ElectronicsStoreApp">
-        <activity android:name=".addItem"></activity>
+        <activity android:name=".Review"></activity>
+        <activity android:name=".checkout" />
+        <activity android:name=".ViewItems" />
+        <activity android:name=".addItem" />
         <activity android:name=".adminhome" />
         <activity android:name=".adminlogin" />
         <activity android:name=".adminReg" />

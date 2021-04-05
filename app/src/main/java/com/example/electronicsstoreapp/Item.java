@@ -58,6 +58,16 @@ public class Item
     String price;
     String itemurl;
 
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    String userid;
+
     public String getItemid() {
         return itemid;
     }
@@ -74,7 +84,7 @@ public class Item
     }
 
 
-    public Item(String category, String manufacturer, String title,String quantity,String price,String itemurl,String itemid)
+    public Item(String category, String manufacturer, String title,String quantity,String price,String itemurl,String itemid,String userid)
     {
         this.category = category;
         this.manufacturer = manufacturer;
@@ -83,6 +93,7 @@ public class Item
         this.price = price;
         this.itemurl=itemurl;
         this.itemid = itemid;
+        this.userid = userid;
 
     }
 

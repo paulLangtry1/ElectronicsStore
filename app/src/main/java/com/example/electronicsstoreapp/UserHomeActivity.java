@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,8 +25,9 @@ import com.google.firebase.database.ValueEventListener;
 public class UserHomeActivity extends AppCompatActivity {
 
     private EditText etSearch;
-    private Button btnSearch,btnViewall,btnAddnote,btnViewUpdate;
+    private Button btnSearch;
     private TextView tvWelcome;
+    private ImageView btnviewitems,btnleavereview,btncheckout;
     private FirebaseDatabase db;
     private DatabaseReference dbRef;
     private FirebaseUser user;
@@ -45,6 +47,10 @@ public class UserHomeActivity extends AppCompatActivity {
 
 
         tvWelcome = findViewById(R.id.tvWelcome);
+        btncheckout = findViewById(R.id.btncheckout);
+        btnleavereview = findViewById(R.id.btnaddreview);
+        btnSearch = findViewById(R.id.btnsearchitemsuser);
+        btnviewitems = findViewById(R.id.btnviewitemuser);
 
         db = FirebaseDatabase.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -68,6 +74,28 @@ public class UserHomeActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        btnviewitems.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(UserHomeActivity.this,ViewItems.class);
+                startActivity(intent);
+
+            }
+        });
+
+        btncheckout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(UserHomeActivity.this,checkout.class);
+                startActivity(intent);
+
 
             }
         });
