@@ -17,7 +17,7 @@
         app:layout_constraintVertical_bias="0.098" />
 
     <Button
-        android:id="@+id/btnbasket"
+        android:id="@+id/btnsubmit"
         android:layout_width="57dp"
         android:layout_height="37dp"
         android:layout_toRightOf="@+id/imageDialog"
@@ -31,7 +31,7 @@
         app:layout_constraintVertical_bias="0.412" />
 
     <TextView
-        android:id="@+id/textdialog"
+        android:id="@+id/itemdetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
@@ -41,7 +41,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/tvreview1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="244dp"
@@ -61,7 +61,7 @@
         android:layout_marginRight="28dp"
         android:text="Add to Basket"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnbasket"
+        app:layout_constraintEnd_toStartOf="@+id/btnsubmit"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageDialog"

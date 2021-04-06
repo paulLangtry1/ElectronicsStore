@@ -42,6 +42,7 @@ public class checkout extends AppCompatActivity implements MyAdapter.OnContractL
     RecyclerView mRecyclerView;
     private String uid;
     private ArrayList<Double> prices = new ArrayList<Double>();
+    private int admin=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -53,6 +54,8 @@ public class checkout extends AppCompatActivity implements MyAdapter.OnContractL
         uid = user.getUid();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
+        admin = getIntent().getExtras().getInt("admin");
 
 
         tvtotalcost = findViewById(R.id.tvtotalcost);
@@ -128,6 +131,17 @@ public class checkout extends AppCompatActivity implements MyAdapter.OnContractL
 
                                 ref.child("ShoppingCart").child(specificcartitem).removeValue();
 
+                                if(admin==1)
+                                {
+                                    Intent intent = new Intent(checkout.this, adminhome.class);
+                                    startActivity(intent);
+                                }
+                                else
+                                {
+                                    Intent intent = new Intent(checkout.this, UserHomeActivity.class);
+                                    startActivity(intent);
+                                }
+
 
 
                             }
@@ -188,8 +202,17 @@ public class checkout extends AppCompatActivity implements MyAdapter.OnContractL
 
 
 
-                                    Intent intent = new Intent(checkout.this, adminhome.class);
-                                    startActivity(intent);
+                                    if(admin==1)
+                                    {
+                                        Intent intent = new Intent(checkout.this, adminhome.class);
+                                        startActivity(intent);
+                                    }
+                                    else
+                                    {
+                                        Intent intent = new Intent(checkout.this, UserHomeActivity.class);
+                                        startActivity(intent);
+                                    }
+
 
 
                                 }

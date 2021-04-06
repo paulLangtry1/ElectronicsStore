@@ -33,6 +33,7 @@ public class UserHomeActivity extends AppCompatActivity {
     private FirebaseUser user;
     private String uid;
     private Customer currentUser;
+    private int admin =  0;
 
 
 
@@ -84,6 +85,7 @@ public class UserHomeActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 Intent intent = new Intent(UserHomeActivity.this,ViewItems.class);
+                intent.putExtra( "admin", admin);
                 startActivity(intent);
 
             }
@@ -94,9 +96,17 @@ public class UserHomeActivity extends AppCompatActivity {
             public void onClick(View v)
             {
                 Intent intent = new Intent(UserHomeActivity.this,checkout.class);
+                intent.putExtra( "admin", admin);
                 startActivity(intent);
 
 
+            }
+        });
+        btnleavereview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserHomeActivity.this,Review.class);
+                startActivity(intent);
             }
         });
 

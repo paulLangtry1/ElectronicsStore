@@ -49,7 +49,8 @@ public class ViewItems extends AppCompatActivity implements MyAdapter.OnContract
     private FirebaseUser user;
     RecyclerView mRecyclerView;
     private String uid;
-
+    private int admin=0;
+    private String tempid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -62,6 +63,8 @@ public class ViewItems extends AppCompatActivity implements MyAdapter.OnContract
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         dbref= FirebaseDatabase.getInstance().getReference(Basket);
+
+        admin = getIntent().getExtras().getInt("admin");
 
 
         database = FirebaseDatabase.getInstance();
@@ -123,8 +126,8 @@ public class ViewItems extends AppCompatActivity implements MyAdapter.OnContract
                         dialog.setTitle("Custom Dialog");
 
                         // set values for custom dialog components - text, image and button
-                        TextView text = (TextView) dialog.findViewById(R.id.textdialog);
-                        TextView text2 = (TextView) dialog.findViewById(R.id.textView3);
+                        TextView text = (TextView) dialog.findViewById(R.id.itemdetails);
+                        TextView text2 = (TextView) dialog.findViewById(R.id.tvreview1);
                         text.setText(contract.getTitle());
                         text2.setText("Quanity: " + contract.getQuantity());
                         ImageView image = (ImageView) dialog.findViewById(R.id.imageDialog);
@@ -157,7 +160,7 @@ public class ViewItems extends AppCompatActivity implements MyAdapter.OnContract
 
                         dialog.show();
 
-                        Button declineButton = (Button) dialog.findViewById(R.id.btnbasket);
+                        Button declineButton = (Button) dialog.findViewById(R.id.btnsubmit);
                                 // if decline button is clicked, close the custom dialog
                         declineButton.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -166,54 +169,15 @@ public class ViewItems extends AppCompatActivity implements MyAdapter.OnContract
 
                                 int quantity = Integer.parseInt(contract.getQuantity());
                                 String id = contract.getItemid();
+                                tempid = id;
                                 quantity--;
                                 DatabaseReference c1v2= FirebaseDatabase.getInstance().getReference().child("Item").child(id).child("quantity");
                                 c1v2.setValue(String.valueOf(quantity));
 
+                                create();
 
 
-                                ref.child("Item").addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        Iterable<DataSnapshot> children = snapshot.getChildren();
-                                        for (DataSnapshot child : children) {
-                                            {
-                                                Item contract = child.getValue(Item.class);
-                                                if (contract.getItemid().equals(id))
-                                                {
-                                                    String category = contract.getCategory();
-                                                    String manufacturer = contract.getManufacturer();
-                                                    String title = contract.getTitle();
-                                                    String quantity = "1";
-                                                    String keyid = dbref.push().getKey();
-                                                    String price = contract.getPrice();
-                                                    String itemurl = keyid;
-                                                    String itemid = contract.getItemid();
-                                                    String userid = uid;
 
-
-                                                    Item basket = new Item(category, manufacturer, title, quantity, price, itemurl, itemid,userid);
-
-
-                                                    dbref.child(keyid).setValue(basket);
-
-                                                    //String keyId = dbRef.push().getKey();
-                                                    //dbRef.child(keyId).setValue(contract);
-
-                                                    Intent intent = new Intent(ViewItems.this, adminhome.class);
-                                                    startActivity(intent);
-
-
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
-                                });
 
 
                             }
@@ -241,4 +205,62 @@ public class ViewItems extends AppCompatActivity implements MyAdapter.OnContract
 
 
     }
+
+    public void create()
+    {
+        ref.child("Item").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Iterable<DataSnapshot> children = snapshot.getChildren();
+                for (DataSnapshot child : children) {
+                    {
+                        Item contract = child.getValue(Item.class);
+                        if (contract.getItemid().equals(tempid))
+                        {
+                            String category = contract.getCategory();
+                            String manufacturer = contract.getManufacturer();
+                            String title = contract.getTitle();
+                            String quantity = "1";
+                            String keyid = dbref.push().getKey();
+                            String price = contract.getPrice();
+                            String itemurl = keyid;
+                            String itemid = contract.getItemid();
+                            String userid = uid;
+
+
+                            Item basket = new Item(category, manufacturer, title, quantity, price, itemurl, itemid,userid);
+
+
+                            dbref.child(keyid).setValue(basket);
+
+                            //String keyId = dbRef.push().getKey();
+                            //dbRef.child(keyId).setValue(contract);
+
+                            if(admin==1)
+                            {
+                                Intent intent = new Intent(ViewItems.this, adminhome.class);
+                                startActivity(intent);
+
+                            }
+                            else {
+                                Intent intent = new Intent(ViewItems.this, UserHomeActivity.class);
+                                startActivity(intent);
+                            }
+
+
+
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
+
 }

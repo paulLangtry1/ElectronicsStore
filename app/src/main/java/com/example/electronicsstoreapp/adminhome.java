@@ -33,6 +33,7 @@ public class adminhome extends AppCompatActivity {
     private FirebaseUser user;
     private String uid;
     private Customer currentUser;
+    private int admin =  1;
 
 
 
@@ -88,6 +89,7 @@ public class adminhome extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(adminhome.this,ViewItems.class);
+                intent.putExtra( "admin", admin);
                 startActivity(intent);
             }
         });
@@ -135,6 +137,7 @@ public class adminhome extends AppCompatActivity {
 
 
         Intent intent = new Intent(adminhome.this,checkout.class);
+        intent.putExtra( "admin", admin);
         startActivity(intent);
 
 

@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ElectronicsStoreApp">
-        <activity android:name=".Review"></activity>
+        <activity android:name=".SearchItems"></activity>
+        <activity android:name=".TakeinRating" />
+        <activity android:name=".Review" />
         <activity android:name=".checkout" />
         <activity android:name=".ViewItems" />
         <activity android:name=".addItem" />
