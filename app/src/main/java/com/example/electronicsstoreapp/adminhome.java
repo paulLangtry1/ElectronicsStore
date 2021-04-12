@@ -25,7 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 public class adminhome extends AppCompatActivity {
 
     private EditText etSearch;
-    private Button btnSearch,btnViewall,btnAddnote,btnViewUpdate;
+    private Button btnSearch;
     private ImageView btnviewcustomers, btnviewstock,btnaddstock;
     private TextView tvWelcome;
     private FirebaseDatabase db;
@@ -51,6 +51,7 @@ public class adminhome extends AppCompatActivity {
         btnaddstock = findViewById(R.id.btnaddstock);
         btnviewcustomers = findViewById(R.id.btnviewcustomers);
         btnviewstock =findViewById(R.id.btnviewstock);
+        btnSearch = findViewById(R.id.btnsearchitemsuser);
 
         db = FirebaseDatabase.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -90,6 +91,22 @@ public class adminhome extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(adminhome.this,ViewItems.class);
                 intent.putExtra( "admin", admin);
+                startActivity(intent);
+            }
+        });
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(adminhome.this,SearchItems.class);
+                intent.putExtra( "admin", admin);
+                startActivity(intent);
+            }
+        });
+        btnviewcustomers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(adminhome.this,View_customers.class);
                 startActivity(intent);
             }
         });

@@ -158,6 +158,9 @@ public class UserHomeActivity extends AppCompatActivity {
     }
     public void ViewAll()
     {
+        Intent intent = new Intent(UserHomeActivity.this, UserHomeActivity.class);
+        startActivity(intent);
+
 
 
 

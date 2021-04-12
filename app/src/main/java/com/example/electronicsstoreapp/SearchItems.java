@@ -85,6 +85,7 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
         btncatdown = findViewById(R.id.btncatdown);
         btnmakedown = findViewById(R.id.tbnmakedown);
         btnmakeup = findViewById(R.id.tbnmakeup);
+        admin = getIntent().getExtras().getInt("admin");
 
 
         database = FirebaseDatabase.getInstance();
@@ -309,6 +310,138 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
         allitemsadmin.get(position);
         String contractID = allitemsadmin.get(position).getItemid();
 
+        if(admin==1)
+        {
+            ref.child("Item").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Iterable<DataSnapshot> children = snapshot.getChildren();
+                    for (DataSnapshot child : children) {
+                        Item contract = child.getValue(Item.class);
+                        if (contract.getItemid().equals(contractID))
+                        {
+                            // Create custom dialog object
+                            final Dialog dialog = new Dialog(SearchItems.this);
+                            // Include dialog.xml file
+                            dialog.setContentView(R.layout.dialog_admin_view);
+                            // Set dialog title
+                            dialog.setTitle("Custom Dialog");
+
+                            // set values for custom dialog components - text, image and button
+                            TextView text = (TextView) dialog.findViewById(R.id.itemdetails);
+                            TextView text2 = (TextView) dialog.findViewById(R.id.tvreview1);
+                            text.setText(contract.getTitle());
+                            text2.setText("Quantity: " + contract.getQuantity());
+                            ImageView image = (ImageView) dialog.findViewById(R.id.imageDialog);
+                            try
+                            {
+                                profilepic = storage.getReferenceFromUrl("gs://electronicstore-e3b89.appspot.com/images/item" + contract.getTitle());
+
+                                File file =    File.createTempFile("image","jpeg");
+
+                                profilepic.getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>()
+                                {
+                                    @Override
+                                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot)
+                                    {
+                                        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                                        image.setImageBitmap(bitmap);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(SearchItems.this,"Image failed to load",Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            dialog.show();
+
+                            Button declineButton = (Button) dialog.findViewById(R.id.btnsubmit);
+                            Button stockaddone =  (Button) dialog.findViewById(R.id.btnsubmit2);
+                            Button gohome =  (Button) dialog.findViewById(R.id.btnsubmit3);
+                            // if decline button is clicked, close the custom dialog
+                            declineButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v)
+                                {
+
+
+                                    String id = contract.getItemid();
+                                    tempid = id;
+                                    create();
+
+                                    Intent intent = new Intent(SearchItems.this, adminhome.class);
+                                    startActivity(intent);
+                                /*
+
+                                int quantity = contract.getQuantity();
+
+
+                                quantity--;
+                                DatabaseReference c1v2= FirebaseDatabase.getInstance().getReference().child("Item").child(id).child("quantity");
+                                c1v2.setValue(quantity);
+
+                                 */
+
+
+
+
+
+
+
+
+
+
+
+
+                                }
+                            });
+
+
+                            stockaddone.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v)
+                                {
+                                    int stock = contract.getQuantity();
+                                    stock++;
+                                    ref.child("Item").child(contract.getItemid()).child("quantity").setValue(stock);
+
+
+                                }
+                            });
+
+                            gohome.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(SearchItems.this, adminhome.class);
+                                    startActivity(intent);
+                                }
+                            });
+
+
+
+
+                        }
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error)
+                {
+                    //   Log.m("DBE Error","Cancel Access DB");
+                }
+            });
+
+        }
+        else
+
         ref.child("Item").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -381,6 +514,9 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
 
                                 create();
 
+                                Intent intent = new Intent(SearchItems.this, UserHomeActivity.class);
+                                startActivity(intent);
+
                                 //decrementstock();
 
 
@@ -421,9 +557,10 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
 
     }
 
+
     public void create()
     {
-        ref.child("Item").addValueEventListener(new ValueEventListener() {
+        ref.child("Item").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Iterable<DataSnapshot> children = snapshot.getChildren();
@@ -452,8 +589,7 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
                             //dbRef.child(keyId).setValue(contract);
 
 
-                                Intent intent = new Intent(SearchItems.this, UserHomeActivity.class);
-                                startActivity(intent);
+
 
 
 

@@ -6,17 +6,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RatingBar;
-import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,10 +20,10 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class Review extends AppCompatActivity implements MyAdapter.OnContractListener {
-    ArrayList<Item> purchasehistory = new ArrayList<Item>();
+public class display_purchase_history extends AppCompatActivity implements MyAdapter.OnContractListener {
 
-    private static final String Review = "Review";
+    ArrayList<Item> allitemsadmin = new ArrayList<Item>();
+
 
     private FirebaseDatabase database;
     private StorageReference profilepic;
@@ -44,21 +34,22 @@ public class Review extends AppCompatActivity implements MyAdapter.OnContractLis
     private FirebaseUser user;
     RecyclerView mRecyclerView;
     private String uid;
-    private RatingBar ratingBarexp;
-    private EditText etcomment;
-
+    private int admin=0;
+    private String passeduid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_review);
+        setContentView(R.layout.activity_display_purchase_history);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        dbref= FirebaseDatabase.getInstance().getReference(Review);
+
+
+        passeduid = getIntent().getExtras().getString("passeduid");
 
 
         database = FirebaseDatabase.getInstance();
@@ -72,7 +63,7 @@ public class Review extends AppCompatActivity implements MyAdapter.OnContractLis
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        myAdapter = new MyAdapter(purchasehistory,this::onContractClick);
+        myAdapter = new MyAdapter(allitemsadmin,this::onContractClick);
         mRecyclerView.setAdapter(myAdapter);
 
         ref.child("CartHistory").addValueEventListener(new ValueEventListener() {
@@ -81,10 +72,10 @@ public class Review extends AppCompatActivity implements MyAdapter.OnContractLis
                 Iterable<DataSnapshot> children = snapshot.getChildren();
                 for (DataSnapshot child : children) {
                     Item contract = child.getValue(Item.class);
-                    if (contract.getUserid().equals(uid)) {
-                        purchasehistory.add(contract);
+                    if (contract.getUserid().equals(passeduid)) {
+                        allitemsadmin.add(contract);
 
-                        myAdapter.notifyItemInserted(purchasehistory.size() - 1);
+                        myAdapter.notifyItemInserted(allitemsadmin.size() - 1);
                     }
                 }
             }
@@ -95,34 +86,6 @@ public class Review extends AppCompatActivity implements MyAdapter.OnContractLis
             }
         });
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.user_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.item1:
-                home();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-    }
-
-    public void home()
-    {
-
-        Intent intent = new Intent(Review.this,UserHomeActivity.class);
-        startActivity(intent);
-
-
-
-    }
 
 
 
@@ -130,20 +93,10 @@ public class Review extends AppCompatActivity implements MyAdapter.OnContractLis
     @Override
     public void onContractClick(int position)
     {
-        purchasehistory.get(position);
-        String contractID = purchasehistory.get(position).getItemurl();
-
-        Intent intent = new Intent(Review.this,TakeinRating.class);
-        intent.putExtra( "id", contractID);
-        startActivity(intent);
-
-
-
-
+        allitemsadmin.get(position);
+       // String contractID = allitemsadmin.get(position).getUserID();
 
 
 
     }
-
-
-    }
+}
