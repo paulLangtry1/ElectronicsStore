@@ -126,7 +126,7 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
             @Override
             public void onClick(View v)
             {
-                sortbyPrice();
+                ascending();
 
                 myAdapter.notifyDataSetChanged();
 
@@ -139,7 +139,7 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
         @Override
         public void onClick(View v)
         {
-            sortpricedown();
+            descending();
             myAdapter.notifyDataSetChanged();
 
 
@@ -149,7 +149,7 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
         btncatup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                catup();
+                ascending();
                 myAdapter.notifyDataSetChanged();
 
             }
@@ -157,7 +157,7 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
         btncatdown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                catdown();
+                descending();
                 myAdapter.notifyDataSetChanged();
 
             }
@@ -165,7 +165,7 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
         btnmakeup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makeup();
+                ascending();
                 myAdapter.notifyDataSetChanged();
 
             }
@@ -173,7 +173,7 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
         btnmakedown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makedown();
+                descending();
                 myAdapter.notifyDataSetChanged();
 
             }
@@ -216,43 +216,6 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
                 //   Log.m("DBE Error","Cancel Access DB");
             }
         });
-
-
-    }
-    public void sortbyPrice()
-    {
-       ascending();
-
-
-    }
-    public void sortpricedown()
-    {
-        descending();
-
-
-    }
-    public void makeup()
-    {
-        ascending();
-
-
-    }
-    public void makedown()
-    {
-        descending();
-
-
-    }
-    public void catup()
-    {
-        ascending();
-
-
-    }
-
-    public void catdown()
-    {
-        descending();
 
 
     }
