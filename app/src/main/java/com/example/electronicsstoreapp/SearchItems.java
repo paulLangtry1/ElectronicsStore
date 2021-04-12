@@ -40,7 +40,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class SearchItems extends AppCompatActivity implements MyAdapter.OnContractListener {
+public class SearchItems extends AppCompatActivity implements MyAdapter.OnContractListener, sortState {
 
     ArrayList<Item> allitemsadmin = new ArrayList<Item>();
     ArrayList<Item> sortedbyprice = new ArrayList<Item>();
@@ -85,6 +85,7 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
         btncatdown = findViewById(R.id.btncatdown);
         btnmakedown = findViewById(R.id.tbnmakedown);
         btnmakeup = findViewById(R.id.tbnmakeup);
+
         admin = getIntent().getExtras().getInt("admin");
 
 
@@ -220,86 +221,38 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
     }
     public void sortbyPrice()
     {
-        Collections.sort(allitemsadmin, new Comparator<Item>()
-        {
-            @Override
-            public int compare(Item o1, Item o2)
-            {
-                return o1.getPrice().compareTo(o2.getPrice());
-            }
-
-        });
+       ascending();
 
 
     }
     public void sortpricedown()
     {
-        Collections.sort(allitemsadmin, new Comparator<Item>()
-        {
-            @Override
-            public int compare(Item o1, Item o2)
-            {
-                return o2.getPrice().compareTo(o1.getPrice());
-            }
-
-        });
+        descending();
 
 
     }
     public void makeup()
     {
-        Collections.sort(allitemsadmin, new Comparator<Item>()
-        {
-            @Override
-            public int compare(Item o1, Item o2)
-            {
-                return o1.getManufacturer().compareToIgnoreCase(o2.getManufacturer());
-            }
-
-        });
+        ascending();
 
 
     }
     public void makedown()
     {
-        Collections.sort(allitemsadmin, new Comparator<Item>()
-        {
-            @Override
-            public int compare(Item o1, Item o2)
-            {
-                return o2.getManufacturer().compareToIgnoreCase(o1.getManufacturer());
-            }
-
-        });
+        descending();
 
 
     }
     public void catup()
     {
-        Collections.sort(allitemsadmin, new Comparator<Item>()
-        {
-            @Override
-            public int compare(Item o1, Item o2)
-            {
-                return o1.getTitle().compareToIgnoreCase(o2.getTitle());
-            }
-
-        });
+        ascending();
 
 
     }
 
     public void catdown()
     {
-        Collections.sort(allitemsadmin, new Comparator<Item>()
-        {
-            @Override
-            public int compare(Item o1, Item o2)
-            {
-                return o2.getTitle().compareToIgnoreCase(o1.getTitle());
-            }
-
-        });
+        descending();
 
 
     }
@@ -638,17 +591,34 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
     }
 
 
+    @Override
+    public void ascending()
+    {
+        Collections.sort(allitemsadmin, new Comparator<Item>()
+        {
+            @Override
+            public int compare(Item o1, Item o2)
+            {
+                return o1.getPrice().compareTo(o2.getPrice());
+            }
+
+        });
+
+    }
+
+    @Override
+    public void descending()
+    {
+        Collections.sort(allitemsadmin, new Comparator<Item>()
+        {
+            @Override
+            public int compare(Item o1, Item o2)
+            {
+                return o2.getPrice().compareTo(o1.getPrice());
+            }
+
+        });
 
 
-
-
-
-
-
-
-
-
-
-
-
+    }
 }

@@ -122,6 +122,7 @@ public class UserHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(UserHomeActivity.this,SearchItems.class);
+                intent.putExtra( "admin", admin);
                 startActivity(intent);
             }
         });
