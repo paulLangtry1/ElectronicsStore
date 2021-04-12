@@ -112,7 +112,7 @@ public class addItem extends AppCompatActivity {
                                 String category = etcategory.getText().toString();
                                 String manu = etmanu.getText().toString();
                                 String title = ettitle.getText().toString();
-                                String quantity = etquantity.getText().toString();
+                                int quantity = Integer.parseInt(etquantity.getText().toString());
                                 String price = etprice.getText().toString();
                                 String itemurl = "";
                                 String itemid = dbRef.push().getKey();

@@ -86,7 +86,7 @@ public class TakeinRating extends AppCompatActivity
                                         for (DataSnapshot child : children) {
                                             {
                                                 Item contract = child.getValue(Item.class);
-                                                if (contract.getUserid().equals(uid))
+                                                if (contract.getItemurl().equals(id))
                                                 {
                                                     String category = contract.getCategory();
                                                     String manufacturer = contract.getManufacturer();
@@ -98,10 +98,11 @@ public class TakeinRating extends AppCompatActivity
 
                                                     String keyid = dbref.push().getKey();
                                                     String reviewid = keyid;
+                                                    String itemid = contract.getItemid();
 
 
 
-                                                    feedback fb = new feedback(category, title, manufacturer, rating, content, userid, reviewid);
+                                                    feedback fb = new feedback(category, title, manufacturer, rating, content, userid, reviewid,itemid);
 
 
                                                     dbref.child(keyid).setValue(fb);

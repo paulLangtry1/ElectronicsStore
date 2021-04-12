@@ -30,13 +30,7 @@ public class Item
         this.title = title;
     }
 
-    public String getQuantity() {
-        return quantity;
-    }
 
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
-    }
 
     public String getPrice() {
         return price;
@@ -54,7 +48,15 @@ public class Item
         this.itemurl = itemurl;
     }
 
-    String quantity;
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    int quantity;
     String price;
     String itemurl;
 
@@ -84,7 +86,7 @@ public class Item
     }
 
 
-    public Item(String category, String manufacturer, String title,String quantity,String price,String itemurl,String itemid,String userid)
+    public Item(String category, String manufacturer, String title,int quantity,String price,String itemurl,String itemid,String userid)
     {
         this.category = category;
         this.manufacturer = manufacturer;

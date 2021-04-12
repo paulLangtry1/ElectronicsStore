@@ -38,7 +38,7 @@ public class ViewItems extends AppCompatActivity implements MyAdapter.OnContract
 
     ArrayList<Item> allitemsadmin = new ArrayList<Item>();
 
-    private static final String Basket = "ShoppingCart";
+    private static final String Basketcart = "ShoppingCart";
 
     private FirebaseDatabase database;
     private StorageReference profilepic;
@@ -62,7 +62,7 @@ public class ViewItems extends AppCompatActivity implements MyAdapter.OnContract
         uid = user.getUid();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        dbref= FirebaseDatabase.getInstance().getReference(Basket);
+        dbref= FirebaseDatabase.getInstance().getReference(Basketcart);
 
         admin = getIntent().getExtras().getInt("admin");
 
@@ -110,6 +110,142 @@ public class ViewItems extends AppCompatActivity implements MyAdapter.OnContract
         allitemsadmin.get(position);
         String contractID = allitemsadmin.get(position).getItemid();
 
+        if(admin==1)
+        {
+            ref.child("Item").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Iterable<DataSnapshot> children = snapshot.getChildren();
+                    for (DataSnapshot child : children) {
+                        Item contract = child.getValue(Item.class);
+                        if (contract.getItemid().equals(contractID))
+                        {
+                            // Create custom dialog object
+                            final Dialog dialog = new Dialog(ViewItems.this);
+                            // Include dialog.xml file
+                            dialog.setContentView(R.layout.dialog_admin_view);
+                            // Set dialog title
+                            dialog.setTitle("Custom Dialog");
+
+                            // set values for custom dialog components - text, image and button
+                            TextView text = (TextView) dialog.findViewById(R.id.itemdetails);
+                            TextView text2 = (TextView) dialog.findViewById(R.id.tvreview1);
+                            text.setText(contract.getTitle());
+                            text2.setText("Quantity: " + contract.getQuantity());
+                            ImageView image = (ImageView) dialog.findViewById(R.id.imageDialog);
+                            try
+                            {
+                                profilepic = storage.getReferenceFromUrl("gs://electronicstore-e3b89.appspot.com/images/item" + contract.getTitle());
+
+                                File file =    File.createTempFile("image","jpeg");
+
+                                profilepic.getFile(file).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>()
+                                {
+                                    @Override
+                                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot)
+                                    {
+                                        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                                        image.setImageBitmap(bitmap);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(ViewItems.this,"Image failed to load",Toast.LENGTH_LONG).show();
+                                    }
+                                });
+
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+
+                            dialog.show();
+
+                            Button declineButton = (Button) dialog.findViewById(R.id.btnsubmit);
+                            Button stockaddone =  (Button) dialog.findViewById(R.id.btnsubmit2);
+                            Button gohome =  (Button) dialog.findViewById(R.id.btnsubmit3);
+                            // if decline button is clicked, close the custom dialog
+                            declineButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v)
+                                {
+
+
+                                    String id = contract.getItemid();
+                                    tempid = id;
+                                    create();
+                                /*
+
+                                int quantity = contract.getQuantity();
+
+
+                                quantity--;
+                                DatabaseReference c1v2= FirebaseDatabase.getInstance().getReference().child("Item").child(id).child("quantity");
+                                c1v2.setValue(quantity);
+
+                                 */
+
+                                    if(admin==1)
+                                    {
+                                        Intent intent = new Intent(ViewItems.this, adminhome.class);
+                                        startActivity(intent);
+
+                                    }
+                                    else {
+                                        Intent intent = new Intent(ViewItems.this, UserHomeActivity.class);
+                                        startActivity(intent);
+                                    }
+
+
+
+
+
+
+
+                                }
+                            });
+
+
+                            stockaddone.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v)
+                                {
+                                    int stock = contract.getQuantity();
+                                    stock++;
+                                    ref.child("Item").child(contract.getItemid()).child("quantity").setValue(stock);
+
+
+                                }
+                            });
+
+                            gohome.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    Intent intent = new Intent(ViewItems.this, adminhome.class);
+                                    startActivity(intent);
+                                }
+                            });
+
+
+
+
+                        }
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error)
+                {
+                    //   Log.m("DBE Error","Cancel Access DB");
+                }
+            });
+
+        }
+        else
+
+
         ref.child("Item").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -129,7 +265,7 @@ public class ViewItems extends AppCompatActivity implements MyAdapter.OnContract
                         TextView text = (TextView) dialog.findViewById(R.id.itemdetails);
                         TextView text2 = (TextView) dialog.findViewById(R.id.tvreview1);
                         text.setText(contract.getTitle());
-                        text2.setText("Quanity: " + contract.getQuantity());
+                        text2.setText("Quantity: " + contract.getQuantity());
                         ImageView image = (ImageView) dialog.findViewById(R.id.imageDialog);
                         try
                         {
@@ -167,14 +303,33 @@ public class ViewItems extends AppCompatActivity implements MyAdapter.OnContract
                             public void onClick(View v)
                             {
 
-                                int quantity = Integer.parseInt(contract.getQuantity());
+
                                 String id = contract.getItemid();
                                 tempid = id;
+                                create();
+                                /*
+
+                                int quantity = contract.getQuantity();
+
+
                                 quantity--;
                                 DatabaseReference c1v2= FirebaseDatabase.getInstance().getReference().child("Item").child(id).child("quantity");
-                                c1v2.setValue(String.valueOf(quantity));
+                                c1v2.setValue(quantity);
 
-                                create();
+                                 */
+
+                                if(admin==1)
+                                {
+                                    Intent intent = new Intent(ViewItems.this, adminhome.class);
+                                    startActivity(intent);
+
+                                }
+                                else {
+                                    Intent intent = new Intent(ViewItems.this, UserHomeActivity.class);
+                                    startActivity(intent);
+                                }
+
+
 
 
 
@@ -208,7 +363,7 @@ public class ViewItems extends AppCompatActivity implements MyAdapter.OnContract
 
     public void create()
     {
-        ref.child("Item").addValueEventListener(new ValueEventListener() {
+        ref.child("Item").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Iterable<DataSnapshot> children = snapshot.getChildren();
@@ -220,7 +375,7 @@ public class ViewItems extends AppCompatActivity implements MyAdapter.OnContract
                             String category = contract.getCategory();
                             String manufacturer = contract.getManufacturer();
                             String title = contract.getTitle();
-                            String quantity = "1";
+                            int quantity = 1;
                             String keyid = dbref.push().getKey();
                             String price = contract.getPrice();
                             String itemurl = keyid;
@@ -236,16 +391,7 @@ public class ViewItems extends AppCompatActivity implements MyAdapter.OnContract
                             //String keyId = dbRef.push().getKey();
                             //dbRef.child(keyId).setValue(contract);
 
-                            if(admin==1)
-                            {
-                                Intent intent = new Intent(ViewItems.this, adminhome.class);
-                                startActivity(intent);
 
-                            }
-                            else {
-                                Intent intent = new Intent(ViewItems.this, UserHomeActivity.class);
-                                startActivity(intent);
-                            }
 
 
 

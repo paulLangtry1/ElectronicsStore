@@ -40,6 +40,7 @@ public class UserHomeActivity extends AppCompatActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -52,6 +53,11 @@ public class UserHomeActivity extends AppCompatActivity {
         btnleavereview = findViewById(R.id.btnaddreview);
         btnSearch = findViewById(R.id.btnsearchitemsuser);
         btnviewitems = findViewById(R.id.btnviewitemuser);
+
+
+
+
+
 
         db = FirebaseDatabase.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -67,6 +73,8 @@ public class UserHomeActivity extends AppCompatActivity {
                         currentUser = child.getValue(Customer.class);
                         String currentName = currentUser.getUsername();
                         tvWelcome.setText("     Welcome " + currentName + "!");
+
+                        dbRef.child("Customer").child(uid).child("userID").setValue(uid);
 
 
                     }
@@ -110,13 +118,20 @@ public class UserHomeActivity extends AppCompatActivity {
             }
         });
 
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(UserHomeActivity.this,SearchItems.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.user_menu, menu);
         return true;
     }
 
@@ -124,21 +139,7 @@ public class UserHomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.item1:
-                return true;
-            case R.id.item2:
-                addNote();
-                return true;
-            case R.id.item3:
-                ViewAll();
-                return true;
-            case R.id.item4:
-                viewUpdate();
-                return true;
-            case R.id.item5:
-                ViewAllNotes();
-                return true;
-            case R.id.item6:
-                SearchAllNotes();
+                home();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -146,9 +147,11 @@ public class UserHomeActivity extends AppCompatActivity {
 
     }
 
-    public void addNote()
+    public void home()
     {
 
+        Intent intent = new Intent(UserHomeActivity.this,UserHomeActivity.class);
+        startActivity(intent);
 
 
 

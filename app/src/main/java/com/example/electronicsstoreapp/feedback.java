@@ -71,13 +71,23 @@ public class feedback
     String userid;
     String reviewid;
 
+    public String getItemid() {
+        return itemid;
+    }
+
+    public void setItemid(String itemid) {
+        this.itemid = itemid;
+    }
+
+    String itemid;
+
     public feedback()
     {
 
     }
 
 
-    public feedback(String category,String title, String manufacturer, String rating,String content,String userid,String reviewid)
+    public feedback(String category,String title, String manufacturer, String rating,String content,String userid,String reviewid,String itemid)
     {
         this.category = category;
         this.title = title;
@@ -86,5 +96,6 @@ public class feedback
         this.content = content;
         this.userid = userid;
         this.reviewid=reviewid;
+        this.itemid = itemid;
     }
 }

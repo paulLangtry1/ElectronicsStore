@@ -26,9 +26,11 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
+    private FirebaseUser userfire;
     private static final String USER = "Customer";
     private static final String TAG = "MainActivity";
     private Customer user;
+    private String uid;
 
 
 
@@ -39,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        database = FirebaseDatabase.getInstance();
+        mDatabase = database.getReference();
 
 
 
@@ -60,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -71,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 String phoneNo=etPhoneno.getText().toString();
                 String address = etaddress.getText().toString();
                 String userID = "";
+                int discount = 0;
 
 
                 if(email.isEmpty() || username.isEmpty() || password.isEmpty() || confirmpw.isEmpty())
@@ -80,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (password.equals(confirmpw) && password.length()>=6)
                 {
-                    user = new Customer(email,password,username,phoneNo,userID,address);
+                    user = new Customer(email,password,username,phoneNo,userID,address,discount);
                     registerUser(email,password);
                 }
                 else

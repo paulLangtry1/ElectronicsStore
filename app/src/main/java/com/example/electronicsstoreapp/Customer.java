@@ -6,6 +6,16 @@ public class Customer
     private String password;
     private String username;
 
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
+        this.discount = discount;
+    }
+
+    private int discount;
+
     public String getAddress() {
         return address;
     }
@@ -72,7 +82,7 @@ public class Customer
     }
 
 
-    public Customer(String email, String password, String username,String phoneNo,String userID,String address)
+    public Customer(String email, String password, String username,String phoneNo,String userID,String address,int discount)
     {
         this.email = email;
         this.password = password;
@@ -81,6 +91,7 @@ public class Customer
         this.address = address;
 
         this.userID = userID;
+        this.discount = discount;
 
     }
 }
