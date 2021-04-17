@@ -134,15 +134,6 @@ public class adminhome extends AppCompatActivity {
             case R.id.item3:
                 ViewAll();
                 return true;
-            case R.id.item4:
-                viewUpdate();
-                return true;
-            case R.id.item5:
-                ViewAllNotes();
-                return true;
-            case R.id.item6:
-                SearchAllNotes();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -161,7 +152,9 @@ public class adminhome extends AppCompatActivity {
     }
     public void ViewAll()
     {
-
+        Intent intent = new Intent(adminhome.this,ViewItemReviews.class);
+        intent.putExtra( "admin", admin);
+        startActivity(intent);
 
 
 

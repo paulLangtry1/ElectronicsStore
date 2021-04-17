@@ -5,6 +5,9 @@
         android:title="Home"
         android:icon="@drawable/ic_home"
         app:showAsAction="ifRoom"/>
+    <item android:id="@+id/item2"
+        android:title="View Item Reviews"
+        app:showAsAction="never"/>
 
 
 </menu>

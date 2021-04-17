@@ -142,6 +142,9 @@ public class UserHomeActivity extends AppCompatActivity {
             case R.id.item1:
                 home();
                 return true;
+            case R.id.item2:
+                viewreviews();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -168,25 +171,14 @@ public class UserHomeActivity extends AppCompatActivity {
 
     }
 
-    public void viewUpdate()
+    public void viewreviews()
     {
+        Intent intent = new Intent(UserHomeActivity.this, ViewItemReviews.class);
+        startActivity(intent);
 
 
 
 
     }
-    public void ViewAllNotes()
-    {
 
-
-
-    }
-    public void SearchAllNotes()
-    {
-
-        //Intent intent = new Intent(HomeActivity.this,TakeinSearch.class);
-       // startActivity(intent);
-
-
-    }
 }

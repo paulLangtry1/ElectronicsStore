@@ -2,24 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/item1"
-        android:title="Add"
+        android:title=""
         app:showAsAction="ifRoom"/>
 
     <item android:id="@+id/item2"
         android:title="Checkout"
         app:showAsAction="never"/>
     <item android:id="@+id/item3"
-        android:title="View All Notes"
+        android:title="View Item Review"
         app:showAsAction="never"/>
-    <item android:id="@+id/item4"
-        android:title="Edit Profile"
-        app:showAsAction="never"/>
-    <item android:id="@+id/item5"
-        android:title="View All User Notes"
-        app:showAsAction="never"/>
-    <item android:id="@+id/item6"
-        android:title="Search Any User Notes"
-        app:showAsAction="never"/>
-
 
 </menu>

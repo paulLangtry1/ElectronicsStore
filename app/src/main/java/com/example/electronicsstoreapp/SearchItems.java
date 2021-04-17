@@ -117,8 +117,15 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(SearchItems.this,SearchItems.class);
-                startActivity(intent);
+               int size = allitemsadmin.size();
+               if(size>0)
+               {
+                   for(int i = 0; i<size; i++)
+                   {
+                       allitemsadmin.remove(0);
+                   }
+                   myAdapter.notifyDataSetChanged();
+               }
 
             }
         });
@@ -204,6 +211,14 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
                     Item contract = child.getValue(Item.class);
                     if (contract.getTitle().equalsIgnoreCase(enteredvalue) || contract.getManufacturer().equalsIgnoreCase(enteredvalue) || contract.getCategory().equalsIgnoreCase(enteredvalue))
                     {
+                        if(enteredvalue.contains(contract.getTitle() + contract.getCategory()))
+                        {
+                            allitemsadmin.add(contract);
+
+                            myAdapter.notifyItemInserted(allitemsadmin.size() - 1);
+                        }
+                        else
+
                         allitemsadmin.add(contract);
 
                         myAdapter.notifyItemInserted(allitemsadmin.size() - 1);
