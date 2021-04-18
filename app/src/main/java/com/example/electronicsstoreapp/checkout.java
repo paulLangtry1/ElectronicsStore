@@ -410,19 +410,19 @@ public class checkout extends AppCompatActivity implements MyAdapter.OnContractL
                         {
                             if(contract.getDiscount()>=3 && contract.getDiscount()<5)
                             {
-                                discount = 0.10;
+                                discount = new StrategyDiscount.threepurchasehistory().discount();
                             }
                             else if (contract.getDiscount()>=5 && contract.getDiscount()<8)
                             {
-                                discount = 0.20;
+                                discount = new StrategyDiscount.fivepurchasehistory().discount();
                             }
                             else if (contract.getDiscount()>=8 && contract.getDiscount()>100)
                             {
-                                discount = 0.35;
+                                discount = new StrategyDiscount.eightpurchasehistory().discount();
                             }
                             else if (contract.getDiscount()>=100)
                             {
-                                discount = 0.50;
+                                discount = new StrategyDiscount.hundredpurchasehistory().discount();
                             }
 
 
