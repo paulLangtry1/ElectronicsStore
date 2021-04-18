@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -36,6 +37,8 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import static android.app.AlertDialog.*;
 
 public class ViewItemReviews extends AppCompatActivity implements MyAdapter.OnContractListener {
 
@@ -122,6 +125,7 @@ public class ViewItemReviews extends AppCompatActivity implements MyAdapter.OnCo
                     feedback contract = child.getValue(feedback.class);
                     if (contract.getReviewid().equals(contractID))
                     {
+
                         // Create custom dialog object
                         final Dialog dialog = new Dialog(ViewItemReviews.this);
                         // Include dialog.xml file
@@ -158,6 +162,10 @@ public class ViewItemReviews extends AppCompatActivity implements MyAdapter.OnCo
 
 
 
+
+
+
+
                     }
 
                 }
@@ -169,6 +177,8 @@ public class ViewItemReviews extends AppCompatActivity implements MyAdapter.OnCo
                 //   Log.m("DBE Error","Cancel Access DB");
             }
         });
+
+
 
 
 

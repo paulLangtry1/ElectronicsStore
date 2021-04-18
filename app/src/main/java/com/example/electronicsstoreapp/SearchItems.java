@@ -6,11 +6,13 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -54,6 +56,7 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
     private DatabaseReference ref,dbref;
     private Button btnsearch,btnclear,btnpriceup,btnpricedown,btncatup,btncatdown,btnmakeup,btnmakedown;
     private EditText etcontent;
+    private TextView txtviewprc;
     MyAdapter myAdapter;
     private FirebaseUser user;
     RecyclerView mRecyclerView;
@@ -77,7 +80,9 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
         dbref= FirebaseDatabase.getInstance().getReference(Basket);
 
         btnsearch = findViewById(R.id.btnsearch);
+        txtviewprc = findViewById(R.id.textView2prc);
         etcontent = findViewById(R.id.etsearchcontent);
+        etcontent.setInputType(InputType.TYPE_NULL);
         btnclear = findViewById(R.id.btnclear);
         btnpriceup = findViewById(R.id.btnpriceup);
         btnpricedown = findViewById(R.id.btnpricedown);
@@ -109,6 +114,12 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
 
                 search();
 
+            }
+        });
+        txtviewprc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(SearchItems.this).setTitle("PRICE").setMessage("Sort by Ascending or Descending order").show();
             }
         });
 
@@ -209,7 +220,7 @@ public class SearchItems extends AppCompatActivity implements MyAdapter.OnContra
                 for (DataSnapshot child : children)
                 {
                     Item contract = child.getValue(Item.class);
-                    if (contract.getTitle().equalsIgnoreCase(enteredvalue) || contract.getManufacturer().equalsIgnoreCase(enteredvalue) || contract.getCategory().equalsIgnoreCase(enteredvalue))
+                    if (contract.getTitle().contains(enteredvalue) || contract.getManufacturer().equalsIgnoreCase(enteredvalue) || contract.getCategory().contains(enteredvalue))
                     {
                         if(enteredvalue.contains(contract.getTitle() + contract.getCategory()))
                         {
